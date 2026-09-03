@@ -48,4 +48,4 @@ Server can send to the client ->
 4. application -> for file
 5. text/plain -> for plain text file
 
-### Note: .gitignore -. this files contain the list of files or folder that is not added to git,these files/folder will not push on github
+### Note: .gitignore -. this files contain the list of files or folder that is not added to git,these files/folder will not push on Github
