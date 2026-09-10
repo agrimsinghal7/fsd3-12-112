@@ -32,9 +32,9 @@ to run nodeman program => npm run dev
 
 Server can send to the client ->
 
-1. Html contents
-2. Html file
-3. Json data
+1. Html contents -> prg2,prg3
+2. Html file -> prg6
+3. Json data - > prg4
 4. Plain file
 5. Js file
 6. Any file to download

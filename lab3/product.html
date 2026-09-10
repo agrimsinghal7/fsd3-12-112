@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tech Store</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        background: #f5f5f5;
+        color: #222;
+      }
+
+      header {
+        background: #111;
+        color: white;
+        padding: 20px 50px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      header h1 {
+        font-size: 28px;
+      }
+
+      nav a {
+        color: white;
+        text-decoration: none;
+        margin-left: 25px;
+        font-size: 16px;
+      }
+
+      nav a:hover {
+        color: #00bfff;
+      }
+
+      .hero {
+        text-align: center;
+        padding: 60px 20px;
+        background: #222;
+        color: white;
+      }
+
+      .hero h2 {
+        font-size: 40px;
+        margin-bottom: 15px;
+      }
+
+      .hero p {
+        font-size: 18px;
+        color: #ccc;
+      }
+
+      .products {
+        padding: 50px;
+      }
+
+      .products h2 {
+        text-align: center;
+        margin-bottom: 35px;
+        font-size: 30px;
+      }
+
+      .product-container {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        flex-wrap: wrap;
+      }
+
+      .card {
+        background: white;
+        width: 300px;
+        padding: 25px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .card img {
+        width: 200px;
+        height: 160px;
+        object-fit: contain;
+        margin-bottom: 20px;
+      }
+
+      .card h3 {
+        font-size: 22px;
+        margin-bottom: 10px;
+      }
+
+      .card p {
+        color: #666;
+        margin-bottom: 12px;
+      }
+
+      .price {
+        font-size: 20px;
+        font-weight: bold;
+        color: #111;
+        margin-bottom: 15px;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background: #111;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+      }
+
+      .btn:hover {
+        background: #00bfff;
+      }
+
+      footer {
+        background: #111;
+        color: white;
+        text-align: center;
+        padding: 20px;
+        margin-top: 30px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>Tech Store</h1>
+
+      <nav>
+        <a href="#laptops">Laptops</a>
+        <a href="#mobiles">Mobiles</a>
+        <a href="#earbuds">Earbuds</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <h2>Welcome to Tech Store</h2>
+      <p>Latest technology at the best prices</p>
+    </section>
+
+    <section class="products">
+      <h2>Our Products</h2>
+
+      <div class="product-container">
+        <div class="card" id="laptops">
+          <img
+            src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853"
+            alt="Laptop"
+          />
+
+          <h3>Premium Laptop</h3>
+          <p>Intel Core i7 | 16GB RAM | 512GB SSD</p>
+          <div class="price">₹75,000</div>
+
+          <a href="#" class="btn">Buy Now</a>
+        </div>
+
+        <div class="card" id="mobiles">
+          <img
+            src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9"
+            alt="Mobile"
+          />
+
+          <h3>Smartphone Pro</h3>
+          <p>256GB Storage | 48MP Camera | 5G</p>
+          <div class="price">₹55,000</div>
+
+          <a href="#" class="btn">Buy Now</a>
+        </div>
+
+        <div class="card" id="earbuds">
+          <img
+            src="https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1"
+            alt="Earbuds"
+          />
+
+          <h3>Wireless Earbuds</h3>
+          <p>Noise Cancellation | 30H Battery | Bluetooth 5.3</p>
+          <div class="price">₹4,999</div>
+
+          <a href="#" class="btn">Buy Now</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>© 2026 Tech Store. All Rights Reserved.</p>
+    </footer>
+  </body>
+</html>
