@@ -1,0 +1,25 @@
+{
+  "name": "lab4",
+  "version": "1.0.0",
+  "description": "Node.js laboratory project demonstrating web server development and Node.js modules.",
+  "main": "prg7.js",
+  "type": "module",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon prg7.js"
+  },
+  "keywords": [
+    "nodejs",
+    "javascript",
+    "web-server",
+    "laboratory"
+  ],
+  "author": "Agrim Singhal",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
