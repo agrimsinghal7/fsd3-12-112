@@ -1,17 +1,32 @@
 {
   "name": "lab-3",
   "version": "1.0.0",
-  "description": "It is built in NOde.js Module which allows  developers to create web server and web client without installing any external package.\r one of the most important module in Node.js,originally designed for building scalable network application and web servers.",
+  "description": "A Node.js based web server project developed for laboratory work. It demonstrates the use of Node.js built-in HTTP and File System modules to create a web server, serve HTML pages, handle different URL routes, and manage HTTP responses without using external packages.",
   "main": "prg1.js",
+  "type": "module",
   "scripts": {
     "start": "node prg3.js",
-    "dev": "nodemon prg4.js"
+    "dev": "nodemon prg7.js",
+    "server": "node server.js",
+    "watch": "nodemon server.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "nodejs",
+    "http",
+    "web-server",
+    "file-system",
+    "html",
+    "javascript",
+    "laboratory",
+    "college-project"
+  ],
+  "author": "Agrim Singhal",
   "license": "ISC",
-  "type": "module",
+  "dependencies": {},
   "devDependencies": {
     "nodemon": "^3.1.14"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
