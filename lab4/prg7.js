@@ -10,13 +10,13 @@ const server = http.createServer((req, res) => {
   } else if ((req.url === "/api/users", req.method === "DELETE")) {
     res.end(JSON.stringify({ msg: "update user 1" }));
   } else if ((req.url === "/api/users", req.method === "PATCH")) {
-    res.end(JSON.stringify({ msg: "remove 1" }));
+    res.end(JSON.stringify({ msg: "remove  1" }));
   } else {
     res.statusCode = 404;
     res.end();
   }
 });
 
-server.listen(3000, () => {
+server.listen(4444, () => {
   console.log("Server prg7 running ...");
 });
