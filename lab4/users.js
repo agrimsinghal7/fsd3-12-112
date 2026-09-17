@@ -1,4 +1,4 @@
-// We use In-memory database for this lab
+// In-memory database for this lab
 
 let users = [
   {
@@ -17,4 +17,9 @@ let users = [
 
 export const getUsers = () => {
   return users;
+};
+
+export const addUser = (user) => {
+  users.push(user);
+  return user;
 };
