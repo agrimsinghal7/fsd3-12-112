@@ -5,17 +5,18 @@ import {
   updateUser,
   deleteUser,
   addUser,
+  updatePartialUser,
 } from "./users.js";
 
 const server = http.createServer((req, res) => {
   res.setHeader("Content-Type", "application/json");
 
-  // GET all users
+  // GET All Users
   if (req.url === "/api/users" && req.method === "GET") {
     res.end(JSON.stringify(getAllUsers()));
   }
 
-  // POST create user
+  // POST Add User
   else if (req.url === "/api/users" && req.method === "POST") {
     let body = "";
 
@@ -24,21 +25,15 @@ const server = http.createServer((req, res) => {
     });
 
     req.on("end", () => {
-      try {
-        const user = JSON.parse(body);
-        const userCreated = addUser(user);
+      const user = JSON.parse(body);
+      const userCreated = addUser(user);
 
-        res.statusCode = 201;
-        res.end(
-          JSON.stringify({
-            msg: "user added",
-            userCreated,
-          }),
-        );
-      } catch (error) {
-        res.statusCode = 400;
-        res.end(JSON.stringify({ msg: "Invalid JSON" }));
-      }
+      res.end(
+        JSON.stringify({
+          msg: "user added",
+          userCreated,
+        }),
+      );
     });
   }
 
@@ -46,19 +41,23 @@ const server = http.createServer((req, res) => {
   else if (req.url.startsWith("/api/users/")) {
     const pid = Number(req.url.split("/")[3]);
 
-    // GET user by ID
+    // GET User by ID
     if (req.method === "GET") {
       const user = getUsersById(pid);
 
       if (!user) {
         res.statusCode = 404;
-        return res.end(JSON.stringify({ msg: "User not found" }));
+        return res.end(
+          JSON.stringify({
+            msg: "User not found",
+          }),
+        );
       }
 
       res.end(JSON.stringify(user));
     }
 
-    // PUT update user
+    // PUT Replace User
     else if (req.method === "PUT") {
       let body = "";
 
@@ -67,51 +66,76 @@ const server = http.createServer((req, res) => {
       });
 
       req.on("end", () => {
-        try {
-          const updateData = JSON.parse(body);
-          const updatedUser = updateUser(pid, updateData);
+        const updateData = JSON.parse(body);
+        const updatedUser = updateUser(pid, updateData);
 
-          if (!updatedUser) {
-            res.statusCode = 404;
-            return res.end(JSON.stringify({ msg: "User not found" }));
-          }
-
-          res.end(
+        if (!updatedUser) {
+          res.statusCode = 404;
+          return res.end(
             JSON.stringify({
-              msg: "user updated",
-              updatedUser,
+              msg: "User not found",
             }),
           );
-        } catch (error) {
-          res.statusCode = 400;
-          res.end(JSON.stringify({ msg: "Invalid JSON" }));
         }
+
+        res.end(
+          JSON.stringify({
+            msg: "user updated",
+            updatedUser,
+          }),
+        );
       });
     }
 
-    // DELETE user
+    // DELETE User
     else if (req.method === "DELETE") {
       const deleted = deleteUser(pid);
 
       if (!deleted) {
         res.statusCode = 404;
-        return res.end(JSON.stringify({ msg: "User not found" }));
+        return res.end(
+          JSON.stringify({
+            msg: "User not found",
+          }),
+        );
       }
 
-      res.end(JSON.stringify({ msg: "user deleted" }));
+      res.end(
+        JSON.stringify({
+          msg: "user deleted",
+        }),
+      );
     }
 
-    // Invalid method
-    else {
-      res.statusCode = 405;
-      res.end(JSON.stringify({ msg: "Method not allowed" }));
-    }
-  }
+    // PATCH Partially Update User
+    else if (req.method === "PATCH") {
+      let body = "";
 
-  // Route not found
-  else {
-    res.statusCode = 404;
-    res.end(JSON.stringify({ msg: "Route not found" }));
+      req.on("data", (chunk) => {
+        body += chunk;
+      });
+
+      req.on("end", () => {
+        const updateData = JSON.parse(body);
+        const updatedUser = updatePartialUser(pid, updateData);
+
+        if (!updatedUser) {
+          res.statusCode = 404;
+          return res.end(
+            JSON.stringify({
+              msg: "User not found",
+            }),
+          );
+        }
+
+        res.end(
+          JSON.stringify({
+            msg: "user partially updated",
+            updatedUser,
+          }),
+        );
+      });
+    }
   }
 });
 
