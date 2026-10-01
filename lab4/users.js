@@ -1,25 +1,55 @@
-// In-memory database for this lab
-
+// We use in-memory database
 let users = [
   {
     id: 1,
-    name: "John",
-    email: "john@example.com",
-    mob: "1234567890",
+    name: "Amit Sharma",
+    mob: "98345xxxxx",
+    email: "amit.example@exam.com",
   },
   {
     id: 2,
-    name: "Jane",
-    email: "jane@example.com",
-    mob: "0987654321",
+    name: "Monika Verma",
+    mob: "92345xxxxx",
+    email: "moni.example@exam.com",
   },
 ];
 
-export const getUsers = () => {
+let nextId = 3;
+
+export const getAllUsers = () => {
   return users;
 };
 
+export const getUsersById = (pid) => {
+  const found = users.find((user) => user.id === pid);
+  return found;
+};
+
 export const addUser = (user) => {
+  user.id = nextId++;
   users.push(user);
+
   return user;
+};
+
+export const updateUser = (pid, updateData) => {
+  const index = users.findIndex((user) => user.id === pid);
+
+  if (index === -1) {
+    return false;
+  }
+  updateData.id = pid;
+  users[index] = updateData;
+  return updateData;
+};
+
+export const deleteUser = (pid) => {
+  const index = users.findIndex((user) => user.id === pid);
+
+  if (index === -1) {
+    return false;
+  }
+  users.splice(index, 1);
+
+  return true;
 };
