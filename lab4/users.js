@@ -42,6 +42,22 @@ export const updateUser = (pid, updateData) => {
   return updateData;
 };
 
+export const updatePartialUser = (pid, updateData) => {
+  const index = users.findIndex((user) => user.id === pid);
+
+  if (index === -1) {
+    return false;
+  }
+
+  users[index] = {
+    ...users[index],
+    ...updateData,
+    id: pid,
+  };
+
+  return users[index];
+};
+
 export const deleteUser = (pid) => {
   const index = users.findIndex((user) => user.id === pid);
 
