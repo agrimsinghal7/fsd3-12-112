@@ -19,8 +19,8 @@ export const getAllUsers = () => {
   return users;
 };
 
-export const getUsersById = (id) => {
-  return users.find((user) => user.id === id);
+export const getUsersById = (pid) => {
+  return users.find((user) => user.id === pid);
 };
 
 export const addUser = (user) => {
@@ -29,30 +29,42 @@ export const addUser = (user) => {
   return user;
 };
 
-export const updateUser = (id, updateData) => {
-  const index = users.findIndex((user) => user.id === id);
+export const updateUser = (pid, updateData) => {
+  const index = users.findIndex((user) => user.id === pid);
 
-  updateData.id = id;
+  if (index === -1) {
+    return false;
+  }
+
+  updateData.id = pid;
   users[index] = updateData;
 
   return updateData;
 };
 
-export const updatePartialUser = (id, updateData) => {
-  const user = users.find((user) => user.id === id);
+export const updatePartialUser = (pid, updateData) => {
+  const index = users.findIndex((user) => user.id === pid);
 
-  Object.assign(user, updateData);
-  user.id = id;
+  if (index === -1) {
+    return false;
+  }
 
-  return user;
+  users[index] = {
+    ...users[index],
+    ...updateData,
+  };
+
+  return users[index];
 };
 
-export const deleteUser = (id) => {
-  const index = users.findIndex((user) => user.id === id);
+export const deleteUser = (pid) => {
+  const index = users.findIndex((user) => user.id === pid);
+
+  if (index === -1) {
+    return false;
+  }
 
   users.splice(index, 1);
 
-  return {
-    msg: "user deleted",
-  };
+  return true;
 };
