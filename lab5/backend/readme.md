@@ -25,6 +25,9 @@ cd backend
         "dev": "nodemon prg1.js"
     }
     ```
+8. add `lab5/backend/node_modules` to .gitignore
+9. create `prg1.js` in backend 
+10. write the script below to start express server 
 ```
   import express from "express";
 
