@@ -21,7 +21,7 @@ app.get("/products", (req, res) => {
     price: 25000,
   };
 
-  res.send(product);
+  res.send(product); 
 });
 
 // this line must be last line👇
