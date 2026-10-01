@@ -19,8 +19,8 @@ export const getAllUsers = () => {
   return users;
 };
 
-export const getUsersById = (pid) => {
-  return users.find((user) => user.id === pid);
+export const getUsersById = (id) => {
+  return users.find((user) => user.id === id);
 };
 
 export const addUser = (user) => {
@@ -29,43 +29,30 @@ export const addUser = (user) => {
   return user;
 };
 
-export const updateUser = (pid, updateData) => {
-  const index = users.findIndex((user) => user.id === pid);
+export const updateUser = (id, updateData) => {
+  const index = users.findIndex((user) => user.id === id);
 
-  if (index === -1) {
-    return false;
-  }
-
-  updateData.id = pid;
+  updateData.id = id;
   users[index] = updateData;
 
   return updateData;
 };
 
-export const updatePartialUser = (pid, updateData) => {
-  const index = users.findIndex((user) => user.id === pid);
+export const updatePartialUser = (id, updateData) => {
+  const user = users.find((user) => user.id === id);
 
-  if (index === -1) {
-    return false;
-  }
+  Object.assign(user, updateData);
+  user.id = id;
 
-  users[index] = {
-    ...users[index],
-    ...updateData,
-    id: pid,
-  };
-
-  return users[index];
+  return user;
 };
 
-export const deleteUser = (pid) => {
-  const index = users.findIndex((user) => user.id === pid);
-
-  if (index === -1) {
-    return false;
-  }
+export const deleteUser = (id) => {
+  const index = users.findIndex((user) => user.id === id);
 
   users.splice(index, 1);
 
-  return true;
+  return {
+    msg: "user deleted",
+  };
 };

@@ -2,21 +2,21 @@ import http from "http";
 import {
   getAllUsers,
   getUsersById,
-  updateUser,
-  deleteUser,
   addUser,
+  updateUser,
   updatePartialUser,
+  deleteUser,
 } from "./users.js";
 
 const server = http.createServer((req, res) => {
   res.setHeader("Content-Type", "application/json");
 
-  // GET All Users
+  // GET all users
   if (req.url === "/api/users" && req.method === "GET") {
     res.end(JSON.stringify(getAllUsers()));
   }
 
-  // POST Add User
+  // POST add user
   else if (req.url === "/api/users" && req.method === "POST") {
     let body = "";
 
@@ -25,39 +25,21 @@ const server = http.createServer((req, res) => {
     });
 
     req.on("end", () => {
-      const user = JSON.parse(body);
-      const userCreated = addUser(user);
-
-      res.end(
-        JSON.stringify({
-          msg: "user added",
-          userCreated,
-        }),
-      );
+      const user = addUser(JSON.parse(body));
+      res.end(JSON.stringify(user));
     });
   }
 
   // Routes with ID
   else if (req.url.startsWith("/api/users/")) {
-    const pid = Number(req.url.split("/")[3]);
+    const id = Number(req.url.split("/")[3]);
 
-    // GET User by ID
+    // GET user by ID
     if (req.method === "GET") {
-      const user = getUsersById(pid);
-
-      if (!user) {
-        res.statusCode = 404;
-        return res.end(
-          JSON.stringify({
-            msg: "User not found",
-          }),
-        );
-      }
-
-      res.end(JSON.stringify(user));
+      res.end(JSON.stringify(getUsersById(id)));
     }
 
-    // PUT Replace User
+    // PUT update user
     else if (req.method === "PUT") {
       let body = "";
 
@@ -66,48 +48,12 @@ const server = http.createServer((req, res) => {
       });
 
       req.on("end", () => {
-        const updateData = JSON.parse(body);
-        const updatedUser = updateUser(pid, updateData);
-
-        if (!updatedUser) {
-          res.statusCode = 404;
-          return res.end(
-            JSON.stringify({
-              msg: "User not found",
-            }),
-          );
-        }
-
-        res.end(
-          JSON.stringify({
-            msg: "user updated",
-            updatedUser,
-          }),
-        );
+        const user = updateUser(id, JSON.parse(body));
+        res.end(JSON.stringify(user));
       });
     }
 
-    // DELETE User
-    else if (req.method === "DELETE") {
-      const deleted = deleteUser(pid);
-
-      if (!deleted) {
-        res.statusCode = 404;
-        return res.end(
-          JSON.stringify({
-            msg: "User not found",
-          }),
-        );
-      }
-
-      res.end(
-        JSON.stringify({
-          msg: "user deleted",
-        }),
-      );
-    }
-
-    // PATCH Partially Update User
+    // PATCH update some fields
     else if (req.method === "PATCH") {
       let body = "";
 
@@ -116,25 +62,15 @@ const server = http.createServer((req, res) => {
       });
 
       req.on("end", () => {
-        const updateData = JSON.parse(body);
-        const updatedUser = updatePartialUser(pid, updateData);
-
-        if (!updatedUser) {
-          res.statusCode = 404;
-          return res.end(
-            JSON.stringify({
-              msg: "User not found",
-            }),
-          );
-        }
-
-        res.end(
-          JSON.stringify({
-            msg: "user partially updated",
-            updatedUser,
-          }),
-        );
+        const user = updatePartialUser(id, JSON.parse(body));
+        res.end(JSON.stringify(user));
       });
+    }
+
+    // DELETE user
+    else if (req.method === "DELETE") {
+      const result = deleteUser(id);
+      res.end(JSON.stringify(result));
     }
   }
 });
