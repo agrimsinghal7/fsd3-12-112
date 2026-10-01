@@ -13,9 +13,10 @@ const server = http.createServer((req, res) => {
   // GET all users
   if (req.url === "/api/users" && req.method === "GET") {
     res.end(JSON.stringify(getAllUsers()));
+  }
 
-    // POST create user
-  } else if (req.url === "/api/users" && req.method === "POST") {
+  // POST create user
+  else if (req.url === "/api/users" && req.method === "POST") {
     let body = "";
 
     req.on("data", (chunk) => {
@@ -23,19 +24,26 @@ const server = http.createServer((req, res) => {
     });
 
     req.on("end", () => {
-      const user = JSON.parse(body);
-      const userCreated = addUser(user);
+      try {
+        const user = JSON.parse(body);
+        const userCreated = addUser(user);
 
-      res.end(
-        JSON.stringify({
-          msg: "user added",
-          userCreated,
-        }),
-      );
+        res.statusCode = 201;
+        res.end(
+          JSON.stringify({
+            msg: "user added",
+            userCreated,
+          }),
+        );
+      } catch (error) {
+        res.statusCode = 400;
+        res.end(JSON.stringify({ msg: "Invalid JSON" }));
+      }
     });
+  }
 
-    // Routes with ID
-  } else if (req.url.startsWith("/api/users/")) {
+  // Routes with ID
+  else if (req.url.startsWith("/api/users/")) {
     const pid = Number(req.url.split("/")[3]);
 
     // GET user by ID
@@ -48,9 +56,10 @@ const server = http.createServer((req, res) => {
       }
 
       res.end(JSON.stringify(user));
+    }
 
-      // PUT update user
-    } else if (req.url == "/api/users/1" && req.method === "PUT") {
+    // PUT update user
+    else if (req.method === "PUT") {
       let body = "";
 
       req.on("data", (chunk) => {
@@ -58,24 +67,30 @@ const server = http.createServer((req, res) => {
       });
 
       req.on("end", () => {
-        const updateData = JSON.parse(body);
-        const updatedUser = updateUser(pid, updateData);
+        try {
+          const updateData = JSON.parse(body);
+          const updatedUser = updateUser(pid, updateData);
 
-        if (!updatedUser) {
-          res.statusCode = 404;
-          return res.end(JSON.stringify({ msg: "User not found" }));
+          if (!updatedUser) {
+            res.statusCode = 404;
+            return res.end(JSON.stringify({ msg: "User not found" }));
+          }
+
+          res.end(
+            JSON.stringify({
+              msg: "user updated",
+              updatedUser,
+            }),
+          );
+        } catch (error) {
+          res.statusCode = 400;
+          res.end(JSON.stringify({ msg: "Invalid JSON" }));
         }
-
-        res.end(
-          JSON.stringify({
-            msg: "user updated",
-            updatedUser,
-          }),
-        );
       });
+    }
 
-      // DELETE user
-    } else if (req.method === "DELETE") {
+    // DELETE user
+    else if (req.method === "DELETE") {
       const deleted = deleteUser(pid);
 
       if (!deleted) {
@@ -86,8 +101,15 @@ const server = http.createServer((req, res) => {
       res.end(JSON.stringify({ msg: "user deleted" }));
     }
 
-    // 404
-  } else {
+    // Invalid method
+    else {
+      res.statusCode = 405;
+      res.end(JSON.stringify({ msg: "Method not allowed" }));
+    }
+  }
+
+  // Route not found
+  else {
     res.statusCode = 404;
     res.end(JSON.stringify({ msg: "Route not found" }));
   }
